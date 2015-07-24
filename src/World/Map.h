@@ -7,14 +7,17 @@
 
 #include <SDL2/SDL_pixels.h>
 #include "Tile.h"
+#include "Entity.h"
 #include <list>
 
 using namespace std;
 
 class Cat;
+class Entity;
 
 class Map {
 private:
+    list<Entity*> *entities;
     list<Cat*> *cats;
 public:
     int width;
@@ -31,6 +34,10 @@ public:
     Tile getTile(int x, int y);
 
     void setTile(int x, int y, Tile tile);
+
+    list<Entity*>* getEntities() {
+        return entities;
+    }
 };
 
 #endif //ROCKETCATS_MAP_H

@@ -113,7 +113,7 @@ void Cat::applyVelocity() {
         }
 
         if (movements[MOVEMENT_ACTION]) {
-            Explosion* explosion = new Explosion(map, {(int) origin.x, (int) origin.y}, 50);
+            Explosion* explosion = new Explosion(map, {(int) origin.x + 20, (int) origin.y + 20}, 50);
             explosion->explode();
             delete explosion;
         }

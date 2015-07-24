@@ -15,8 +15,10 @@ private:
     Map *map;
 public:
     Explosion(Map *map, AbsPos pos, int radius);
+    Explosion(Map *map, AbsPos pos, int radius, double force);
     void explode();
     int radius;
+    double force;
 };
 
 

@@ -9,6 +9,7 @@ Map::Map(int w, int h) {
     this->width = w;
     this->height = h;
     this->cats = new list<Cat*>();
+    this->entities = new list<Entity*>();
 }
 
 list<Cat*>* Map::getCats() {
@@ -16,6 +17,7 @@ list<Cat*>* Map::getCats() {
 }
 
 void Map::addCat(Cat *cat) {
+    entities->push_back(cat);
     cats->push_back(cat);
     cat->setMap(this);
 }
@@ -29,7 +31,7 @@ void Map::placeCat(Cat *cat) {
         double randX = rand() % width;
         double randY = rand() % height;
 
-        Tile tile = getTile(randX, randY);
+        Tile tile = getTile((int) randX, (int) randY);
 
         if (tile.destroyed) {
             // Snap to ground
