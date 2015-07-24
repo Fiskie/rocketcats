@@ -16,7 +16,18 @@ protected:
     int width, height;
     Map *map;
     double maxFallSpeed = 20;
+    // the active flag should be true if an entity should be affected by time, movement, gravity, etc.
+    // this is so we don't have to check for movement on entities that should not be moving.
+    bool active = true;
 public:
+    bool isActive() {
+        return active;
+    }
+
+    void setActive() {
+        active = true;
+    }
+
     Pos origin;
     Pos velocity;
     double fallSpeedTolerance = 15;

@@ -152,7 +152,12 @@ void Game::render() {
 }
 
 void Game::update(double delta) {
-    activeCat->applyVelocity();
+    auto entities = map->getEntities();
+
+    for (auto i = entities->begin(); i != entities->end(); i++) {
+        if ((*i)->isActive())
+            (*i)->applyVelocity();
+    }
 }
 
 void Game::setup() {

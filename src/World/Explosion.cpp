@@ -43,6 +43,7 @@ void Explosion::explode() {
             printf("Rel: %.2f %.2f\n", relX, relY);
             printf("Velocity: %.2f %.2f\n", velX, velY);
 
+            (*i)->setActive();
             (*i)->velocity.x = (abs(relX) < 1 ? 0 : velX);
             (*i)->velocity.y = (abs(relY) < 1 ? 0 : velY);
         }
