@@ -5,11 +5,13 @@
 #ifndef ROCKETCATS_ENTITY_H
 #define ROCKETCATS_ENTITY_H
 
+#include <SDL2/SDL_render.h>
 #include "../Pos.h"
 #include "Tile.h"
 #include "Map.h"
 
 class Map;
+class Camera;
 
 class Entity {
 protected:
@@ -20,6 +22,7 @@ protected:
     // this is so we don't have to check for movement on entities that should not be moving.
     bool active = true;
 public:
+
     bool isActive() {
         return active;
     }
@@ -35,7 +38,10 @@ public:
 
     void applyMovement();
     void applyGravity();
+
+    virtual void onUpdate() = 0;
     virtual void applyVelocity() = 0;
+    virtual void render(Camera *camera) = 0;
 
     bool isTouchingFloor();
     bool isTouchingCeiling();

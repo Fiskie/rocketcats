@@ -9,7 +9,7 @@
 #include <SDL2_ttf/SDL_ttf.h>
 #include "Game.h"
 #include "FatalGameException.h"
-#include "Cameras/DefaultCamera.h"
+#include "Cameras/Camera.h"
 #include "World/MapGenerator.h"
 #include "World/Cat.h"
 
@@ -155,15 +155,14 @@ void Game::update(double delta) {
     auto entities = map->getEntities();
 
     for (auto i = entities->begin(); i != entities->end(); i++) {
-        if ((*i)->isActive())
-            (*i)->applyVelocity();
+        (*i)->onUpdate();
     }
 }
 
 void Game::setup() {
     fpsTimer->start();
     event = new Event(this);
-    camera = new DefaultCamera(this);
+    camera = new Camera(this);
 
     MapGenerator *generator = new MapGenerator();
     map = generator->generate();
@@ -173,7 +172,7 @@ void Game::setup() {
 
     activeCat = cat;
 
-    ((DefaultCamera *) camera)->target = cat;
+    ((Camera *) camera)->target = cat;
 
     Cat *cat2 = new Cat();
     cat2->setName("Rrerr");

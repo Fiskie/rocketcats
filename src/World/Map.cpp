@@ -24,7 +24,6 @@ void Map::addCat(Cat *cat) {
 
 void Map::placeCat(Cat *cat) {
     // Check random spot on the map
-
     bool placed = false;
 
     while (!placed) {

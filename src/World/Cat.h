@@ -60,6 +60,12 @@ public:
     void setHealth(int health) {
         this->health = health;
     }
+
+    void onUpdate();
+
+    void render(SDL_Renderer *renderer);
+
+    void render(Camera *camera);
 };
 
 

@@ -5,6 +5,9 @@
 #include "Explosion.h"
 #include "../Pos.h"
 
+#include "Tile.h"
+#include "Map.h"
+
 // Basically destroy everything in a circle around pos
 void Explosion::explode() {
     // I don't know how this works, but it does, and that's what's important
@@ -28,7 +31,6 @@ void Explosion::explode() {
     list<Entity*> *entities = map->getEntities();
 
     for (auto i = entities->begin(); i != entities->end(); i++) {
-        // todo
         double relX = ((*i)->origin.x - pos.x);
         double relY = ((*i)->origin.y - pos.y);
         double distance = sqrt(relX * relX + relY * relY);
@@ -44,8 +46,8 @@ void Explosion::explode() {
             printf("Velocity: %.2f %.2f\n", velX, velY);
 
             (*i)->setActive();
-            (*i)->velocity.x = (abs(relX) < 1 ? 0 : velX);
-            (*i)->velocity.y = (abs(relY) < 1 ? 0 : velY);
+            (*i)->velocity.x = (abs((int) relX) < 1 ? 0 : velX);
+            (*i)->velocity.y = (abs((int) relY) < 1 ? 0 : velY);
         }
     }
 }

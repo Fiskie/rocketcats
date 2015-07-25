@@ -12,8 +12,6 @@
 #include <SDL2/sdl.h>
 #include "Event.h"
 #include "Timer.h"
-#include "World/Map.h"
-#include "Cameras/Camera.h"
 #include <list>
 #include <string>
 

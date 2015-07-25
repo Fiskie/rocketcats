@@ -3,7 +3,7 @@
 //
 
 #include "Cat.h"
-#include "NinjaRope.h"
+#include "../Cameras/Camera.h"
 #include "../Game.h"
 #include "Explosion.h"
 
@@ -59,10 +59,10 @@ void Cat::unsetAllMovement() {
 }
 
 void Cat::move(int direction) {
-    int base = origin.y + height / 2;
+    int base = (int) origin.y + height / 2;
     int ceil = base + height;
 
-    int desiredX = origin.x + (direction == DIRECTION_LEFT ? -1 : 1);
+    int desiredX = (int) origin.x + (direction == DIRECTION_LEFT ? -1 : 1);
     int checkedX = desiredX + (direction == DIRECTION_LEFT ? -(width / 2) : width / 2);
 
     if (map->terrain[checkedX][base - 1].destroyed) {
@@ -134,5 +134,42 @@ void Cat::applyVelocity() {
 
         remainingX -= addedX;
         remainingY -= addedY;
+    }
+}
+
+void Cat::onUpdate() {
+    applyVelocity();
+}
+
+void Cat::render(Camera *camera) {
+    AbsPos camOrigin = camera->getOrigin();
+
+    int cameraX = camOrigin.x - camera->game->originX;
+    int cameraY = camOrigin.y - camera->game->originY;
+
+    SDL_Renderer *renderer = camera->game->getRenderer();
+
+    int oX = (int) origin.x, oY = (int) origin.y;
+
+    SDL_Rect rect;
+    rect.x = oX - width / 2 - cameraX;
+    rect.y = oY - height / 2 - cameraY;
+    rect.w = width;
+    rect.h = height;
+
+    SDL_Color bg;
+    bg.b = 25;
+    bg.g = 50;
+    bg.r = 120;
+
+    camera->renderLabel(name, oX - cameraX, oY - 40 - cameraY, ALIGNMENT_CENTER);
+    camera->renderLabel(format("%d", health), oX - cameraX, oY - 28 - cameraY, ALIGNMENT_CENTER);
+
+    SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, bg.a);
+    SDL_RenderFillRect(renderer, &rect);
+
+    if (this == camera->game->getActiveCat()) {
+        camera->renderLabel(format("Position: %.2f %.2f", origin.x, origin.y), 4, 4);
+        camera->renderLabel(format("Velocity: %.2f %.2f", velocity.x, velocity.y), 4, 24);
     }
 }

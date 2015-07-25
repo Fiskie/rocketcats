@@ -9,7 +9,7 @@
 #include <iostream>
 #include "Event.h"
 #include "World/Cat.h"
-#include "Cameras/DefaultCamera.h"
+#include "Cameras/Camera.h"
 
 using namespace std;
 
@@ -45,7 +45,7 @@ void Event::onKeyDown(SDL_Keycode key) {
         if ((*bindings)[key] == MOVEMENT_CYCLE) {
             game->cycleActive();
         } else if ((*bindings)[key] == MOVEMENT_CAMERA_RESET) {
-            ((DefaultCamera*) game->getCamera())->setTrackingMode(TRACK_LOOSE);
+            ((Camera*) game->getCamera())->setTrackingMode(TRACK_LOOSE);
         } else {
             game->getActiveCat()->setMovement((*bindings)[key]);
         }
@@ -65,7 +65,7 @@ void Event::onMouseMotion(SDL_MouseMotionEvent motion) {
         return;
     }
 
-    DefaultCamera *camera = ((DefaultCamera*) game->getCamera());
+    Camera *camera = ((Camera*) game->getCamera());
 
     camera->setTrackingMode(TRACK_DISABLE);
 

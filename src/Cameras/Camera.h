@@ -6,6 +6,7 @@
 #define rocketcats_CAMERA_H
 
 #include "../Game.h"
+#include "../World/Cat.h"
 #include <SDL2_ttf/SDL_ttf.h>
 #include <string>
 
@@ -13,24 +14,46 @@
 #define ALIGNMENT_RIGHT 1
 #define ALIGNMENT_CENTER 2
 
+#define TRACK_DISABLE 0
+#define TRACK_LOOSE 1
+#define TRACK_STRICT 2
+
 using namespace std;
 
 class Game;
+class Cat;
 
 class Camera {
-protected:
-    Game *game;
-
-    Camera();
-
+private:
+    int trackingMode = TRACK_STRICT;
     TTF_Font *font;
 public:
-    Camera(Game *game);
+    Game *game;
 
-    virtual void render() = 0;
+    Camera(Game *game);
 
     void renderLabel(string label, int x, int y, int alignment);
     void renderLabel(string label, int x, int y);
+
+    double zoom;
+    AbsPos origin;
+    Cat *target;
+
+    AbsPos getOrigin();
+
+    void render();
+    void renderMap();
+    void renderBg();
+
+    void setTrackingMode(int trackingMode) {
+        this->trackingMode = trackingMode;
+    }
+
+    int getTrackingMode() {
+        return trackingMode;
+    }
+
+    void placeOriginAtActiveCat();
 
     virtual ~Camera();
 };

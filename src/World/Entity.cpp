@@ -118,8 +118,8 @@ bool Entity::isValidLocation(double x, double y) {
 }
 
 bool Entity::isTouchingFloor() {
-    int base = origin.y + height / 2 + 1;
-    int startX = origin.x - width / 2;
+    int base = (int) origin.y + height / 2 + 1;
+    int startX = (int) origin.x - width / 2;
     int endX = startX + width;
 
     for (int x = startX; x <= endX; x++) {
@@ -134,8 +134,8 @@ bool Entity::isTouchingFloor() {
 }
 
 bool Entity::isTouchingCeiling() {
-    int ceil = origin.y - height / 2 - 1;
-    int startX = origin.x - width / 2;
+    int ceil = (int) origin.y - height / 2 - 1;
+    int startX = (int) origin.x - width / 2;
     int endX = startX + width;
 
     for (int x = startX; x <= endX; x++) {
