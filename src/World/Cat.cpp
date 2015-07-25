@@ -147,7 +147,7 @@ void Cat::render(Camera *camera) {
     int cameraX = camOrigin.x - camera->game->originX;
     int cameraY = camOrigin.y - camera->game->originY;
 
-    SDL_Renderer *renderer = camera->game->getRenderer();
+    SDL_Renderer *renderer = camera->game->renderer;
 
     int oX = (int) origin.x, oY = (int) origin.y;
 

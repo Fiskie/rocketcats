@@ -71,7 +71,7 @@ Map *MapGenerator::generate() {
 
         printf("x: %d ceil: %d\n", x, ceil);
 
-        for (int y = h; y > ceil; y--) {
+        for (int y = h - 1; y > ceil; y--) {
             map->terrain[x][y] = tile;
         }
     }

@@ -20,7 +20,7 @@ Camera::Camera(Game *game) {
 }
 
 void Camera::renderLabel(string label, int x, int y, int alignment) {
-    SDL_Renderer *renderer = game->getRenderer();
+    SDL_Renderer *renderer = game->renderer;
     SDL_Color color;
     const char* str = label.c_str();
     int w;
@@ -79,8 +79,8 @@ void Camera::renderLabel(string label, int x, int y) {
 
 
 void Camera::renderBg() {
-    SDL_Renderer *renderer = game->getRenderer();
-    Map *map = game->getMap();
+    SDL_Renderer *renderer = game->renderer;
+    Map *map = game->map;
 
     // Render background
     SDL_Color bg;
@@ -140,9 +140,9 @@ void Camera::renderMap() {
 
     renderLabel(format("Camera: origin (%d, %d) at (%d, %d, %d, %d)", origin.x, origin.y, cameraX, cameraY, cameraW, cameraH), 4, 124);
 
-    Map *map = game->getMap();
+    Map *map = game->map;
 
-    SDL_Renderer *renderer = game->getRenderer();
+    SDL_Renderer *renderer = game->renderer;
 
     // Render tiles
     for (int x = cameraX; x < cameraW; x++) {
@@ -168,7 +168,7 @@ void Camera::render() {
     this->renderMap();
     long mapRender = SDL_GetTicks();
 
-    list<Entity*> *entities = game->getMap()->getEntities();
+    list<Entity*> *entities = game->map->getEntities();
 
     for (auto it = entities->begin(); it != entities->end(); ++it) {
         (*it)->render(this);
@@ -181,7 +181,7 @@ void Camera::render() {
     renderLabel(format("entity render time: %d", entityRender - mapRender), 4, 84);
     renderLabel(format("average fps: %f", game->avgFPS), 4, 104);
 
-    SDL_RenderPresent(game->getRenderer());
+    SDL_RenderPresent(game->renderer);
 }
 
 void Camera::placeOriginAtActiveCat() {

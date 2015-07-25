@@ -25,18 +25,18 @@ class Cat;
 
 class Game {
 private:
-    SDL_Window *window = NULL;
-    SDL_Renderer *renderer = NULL;
-
     Event *event = NULL;
     Timer *fpsTimer = new Timer();
     bool running;
-    Map *map;
 
 // list<Camera> *cameras; todo
     Camera *camera;
     Cat *activeCat;
 public:
+    SDL_Window *window = NULL;
+    SDL_Renderer *renderer = NULL;
+    Map *map;
+
     Camera *getCamera() const {
         return camera;
     }
