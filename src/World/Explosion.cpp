@@ -36,8 +36,8 @@ void Explosion::explode() {
         if (abs((int) distance) <= radius) {
             // entity caught in explosion
 
-            double velX = -((radius + relX) * force);
-            double velY = -((radius + relY) * force);
+            double velX = ((relX > 0 ? radius : -radius) - relX) * force;
+            double velY = ((relY > 0 ? radius : -radius) - relY) * force;
 
             printf("Distance: %.2f Radius: %d Force: %.2f\n", distance, radius, force);
             printf("Rel: %.2f %.2f\n", relX, relY);

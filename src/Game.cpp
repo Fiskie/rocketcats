@@ -171,15 +171,23 @@ void Game::setup() {
     Cat *cat = new Cat();
     cat->setName("Meow");
 
-    Cat *cat2 = new Cat();
-    cat2->setName("Rrerr");
-
     activeCat = cat;
 
     ((DefaultCamera *) camera)->target = cat;
 
+    Cat *cat2 = new Cat();
+    cat2->setName("Rrerr");
+
+    Cat *cat3 = new Cat();
+    cat3->setName("Nyan");
+
+    Cat *cat4 = new Cat();
+    cat4->setName("Mew");
+
     map->addCat(cat);
     map->addCat(cat2);
+    map->addCat(cat3);
+    map->addCat(cat4);
 
     map->placeCats();
 

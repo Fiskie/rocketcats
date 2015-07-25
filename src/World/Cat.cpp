@@ -93,7 +93,7 @@ void Cat::applyVelocity() {
             velocity.x = maxWalkSpeed;
             orientation = DIRECTION_RIGHT;
         } else {
-            velocity.x = 0;
+            velocity.x *= 0.7;
         }
 
         if (movements[MOVEMENT_JUMP]) {
@@ -113,7 +113,7 @@ void Cat::applyVelocity() {
         }
 
         if (movements[MOVEMENT_ACTION]) {
-            Explosion* explosion = new Explosion(map, {(int) origin.x + 20, (int) origin.y + 20}, 50);
+            Explosion* explosion = new Explosion(map, {(int) origin.x, (int) origin.y}, 50);
             explosion->explode();
             delete explosion;
         }
