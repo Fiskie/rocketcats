@@ -15,6 +15,8 @@ void Mine::detonate() {
 }
 
 void Mine::onUpdate() {
+    applyVelocity();
+
     if (isTriggered() && !detonated) {
         detonate();
     }
@@ -28,9 +30,8 @@ bool Mine::isTriggered() {
         double relY = ((*i)->origin.y - origin.y);
         double distance = sqrt(relX * relX + relY * relY);
 
-        if (abs((int) distance) <= 40) {
+        if (abs((int) distance) <= 20)
             return true;
-        }
     }
 
     return false;

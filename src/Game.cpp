@@ -193,11 +193,14 @@ void Game::setup() {
     map->addCat(cat3);
     map->addCat(cat4);
 
-    Mine *mine = new Mine();
+    for (int i = 1; i < 10; i++) {
+        Mine *mine = new Mine();
+        mine->origin.x = i * 200;
+        mine->origin.y = 50;
 
-    mine->origin = {200,100};
+        map->addEntity(mine);
+    }
 
-    map->addEntity(mine);
     map->placeCats();
 
     SDL_ShowCursor(0);
