@@ -12,6 +12,7 @@
 #include "Cameras/Camera.h"
 #include "World/MapGenerator.h"
 #include "World/Cat.h"
+#include "World/Mine.h"
 
 Game::Game() {
     running = true;
@@ -192,6 +193,11 @@ void Game::setup() {
     map->addCat(cat3);
     map->addCat(cat4);
 
+    Mine *mine = new Mine();
+
+    mine->origin = {200,100};
+
+    map->addEntity(mine);
     map->placeCats();
 
     SDL_ShowCursor(0);

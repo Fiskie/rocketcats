@@ -68,3 +68,8 @@ void Map::setTile(int x, int y, Tile tile) {
     if (x >= 0 && x < width && y >= 0 && y < height)
         terrain[x][y] = tile;
 }
+
+void Map::addEntity(Entity *entity) {
+    entities->push_back(entity);
+    entity->setMap(this);
+}

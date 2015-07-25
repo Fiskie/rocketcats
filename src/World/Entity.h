@@ -38,9 +38,9 @@ public:
 
     void applyMovement();
     void applyGravity();
+    void applyVelocity();
 
     virtual void onUpdate() = 0;
-    virtual void applyVelocity() = 0;
     virtual void render(Camera *camera) = 0;
 
     bool isTouchingFloor();

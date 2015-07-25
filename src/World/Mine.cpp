@@ -5,15 +5,17 @@
 #include "Mine.h"
 #include "Explosion.h"
 #include "Cat.h"
+#include "../Cameras/Camera.h"
 
 void Mine::detonate() {
     Explosion *explosion = new Explosion(map, {(int) origin.x, (int) origin.y}, 40);
     explosion->explode();
     delete explosion;
+    detonated = true;
 }
 
 void Mine::onUpdate() {
-    if (isTriggered()) {
+    if (isTriggered() && !detonated) {
         detonate();
     }
 }
@@ -34,6 +36,32 @@ bool Mine::isTriggered() {
     return false;
 }
 
-void Mine::render(SDL_Renderer *renderer) {
+void Mine::render(Camera *camera) {
+    if (detonated) // todo entity cleanup
+        return;
 
+    int width = 12, height = 6;
+
+    AbsPos camOrigin = camera->origin;
+
+    int cameraX = camOrigin.x - camera->game->originX;
+    int cameraY = camOrigin.y - camera->game->originY;
+
+    SDL_Renderer *renderer = camera->game->renderer;
+
+    int oX = (int) origin.x, oY = (int) origin.y;
+
+    SDL_Rect rect;
+    rect.x = oX - width / 2 - cameraX;
+    rect.y = oY - height / 2 - cameraY;
+    rect.w = width;
+    rect.h = height;
+
+    SDL_Color bg;
+    bg.b = 25;
+    bg.g = 120;
+    bg.r = 25;
+
+    SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, bg.a);
+    SDL_RenderFillRect(renderer, &rect);
 }

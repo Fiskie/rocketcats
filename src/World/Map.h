@@ -38,6 +38,8 @@ public:
     list<Entity*>* getEntities() {
         return entities;
     }
+
+    void addEntity(Entity *entity);
 };
 
 #endif //ROCKETCATS_MAP_H

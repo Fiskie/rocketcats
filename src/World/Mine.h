@@ -5,15 +5,15 @@
 #ifndef ROCKETCATS_MINE_H
 #define ROCKETCATS_MINE_H
 
-
 #include "Entity.h"
 
 class Mine: public Entity {
+    bool detonated = false;
+
     bool isTriggered();
     void detonate();
     void onUpdate();
-
-    void render(SDL_Renderer *renderer);
+    void render(Camera *camera);
 };
 
 
