@@ -3,7 +3,7 @@
 //
 
 #include "Camera.h"
-#include "../FatalGameException.h"
+#include "FatalGameException.h"
 
 Camera::Camera(Game *game) {
     this->game = game;

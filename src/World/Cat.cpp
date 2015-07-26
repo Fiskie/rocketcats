@@ -3,18 +3,9 @@
 //
 
 #include "Cat.h"
-#include "../Cameras/Camera.h"
+#include "../Camera.h"
 #include "../Game.h"
 #include "Explosion.h"
-
-Cat::Cat() {
-    health = 100;
-    height = 24;
-    width = 12;
-    velocity.x = 0;
-    velocity.y = 0;
-    unsetAllMovement();
-}
 
 Team *Cat::getTeam() {
     return team;
@@ -172,4 +163,14 @@ void Cat::render(Camera *camera) {
         camera->renderLabel(format("Position: %.2f %.2f", origin.x, origin.y), 4, 4);
         camera->renderLabel(format("Velocity: %.2f %.2f", velocity.x, velocity.y), 4, 24);
     }
+}
+
+Cat::Cat(Game *game) {
+    health = 100;
+    height = 24;
+    width = 12;
+    velocity.x = 0;
+    velocity.y = 0;
+    unsetAllMovement();
+    this->game = game;
 }

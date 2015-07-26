@@ -27,12 +27,14 @@ class Game {
 private:
     Event *event = NULL;
     Timer *fpsTimer = new Timer();
-    bool running;
 
 // list<Camera> *cameras; todo
     Camera *camera;
     Cat *activeCat;
 public:
+    bool running;
+    double delta;
+
     SDL_Window *window = NULL;
     SDL_Renderer *renderer = NULL;
     Map *map;
@@ -53,13 +55,12 @@ public:
 
     Game();
 
-    void update(double delta);
-
     void render();
 
     void setup();
 
-    void initialize();
+    void initRenderer();
+    void initLibraries();
 
     virtual void run();
 
@@ -83,6 +84,10 @@ public:
     int resY;
 
     void cycleActive();
+
+    void main();
+
+    void update();
 };
 
 //missing string printf

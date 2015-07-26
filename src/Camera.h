@@ -5,8 +5,8 @@
 #ifndef rocketcats_CAMERA_H
 #define rocketcats_CAMERA_H
 
-#include "../Game.h"
-#include "../World/Cat.h"
+#include "Game.h"
+#include "World/Cat.h"
 #include <SDL2_ttf/SDL_ttf.h>
 #include <string>
 

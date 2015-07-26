@@ -9,7 +9,7 @@
 #include <iostream>
 #include "Event.h"
 #include "World/Cat.h"
-#include "Cameras/Camera.h"
+#include "Camera.h"
 
 using namespace std;
 

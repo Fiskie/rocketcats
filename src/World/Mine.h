@@ -8,8 +8,11 @@
 #include "Entity.h"
 
 class Mine: public Entity {
+private:
     bool detonated = false;
 
+public:
+    Mine(Game* game);
     bool isTriggered();
     void detonate();
     void onUpdate();

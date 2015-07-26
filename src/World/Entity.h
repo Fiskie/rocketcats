@@ -9,19 +9,22 @@
 #include "../Pos.h"
 #include "Tile.h"
 #include "Map.h"
+#include "../Game.h"
 
 class Map;
 class Camera;
 
 class Entity {
 protected:
-    int width, height;
+    int width = 0, height = 0;
     Map *map;
     double maxFallSpeed = 20;
     // the active flag should be true if an entity should be affected by time, movement, gravity, etc.
     // this is so we don't have to check for movement on entities that should not be moving.
     bool active = true;
+    Entity();
 public:
+    Game *game;
 
     bool isActive() {
         return active;

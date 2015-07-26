@@ -5,7 +5,7 @@
 #include "Mine.h"
 #include "Explosion.h"
 #include "Cat.h"
-#include "../Cameras/Camera.h"
+#include "../Camera.h"
 
 void Mine::detonate() {
     Explosion *explosion = new Explosion(map, {(int) origin.x, (int) origin.y}, 40);
@@ -41,8 +41,6 @@ void Mine::render(Camera *camera) {
     if (detonated) // todo entity cleanup
         return;
 
-    int width = 12, height = 6;
-
     AbsPos camOrigin = camera->origin;
 
     int cameraX = camOrigin.x - camera->game->originX;
@@ -65,4 +63,10 @@ void Mine::render(Camera *camera) {
 
     SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, bg.a);
     SDL_RenderFillRect(renderer, &rect);
+}
+
+Mine::Mine(Game *game) {
+    this->game = game;
+    width = 12;
+    height = 6;
 }

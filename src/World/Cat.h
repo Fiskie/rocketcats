@@ -35,7 +35,7 @@ private:
     double aimAngle = 0;
     int orientation = DIRECTION_RIGHT;
 public:
-    Cat();
+    Cat(Game *game);
     Team* getTeam();
     void setTeam(Team *team);
     char* getName();

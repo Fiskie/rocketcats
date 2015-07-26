@@ -8,14 +8,6 @@ void Entity::applyVelocity() {
     // Move based on airborne velocity, then alter the velocity to account for gravity, friction, air resistance, bounce, etc.
 
     /*
-    // Now, calculate for gravity, etc.
-    if (velocity.y > maxFallSpeed) {
-        // If we are above the natural fall speed, slowly lower it.
-        // todo use an easing function
-        velocity.y--;
-    }*/
-
-    /*
     if (isTouchingFloor()) {
         velocity.y = 0;
 
@@ -153,7 +145,7 @@ void Entity::applyGravity() {
     // todo: alter velocity
     // all this function does right now is basically snap you to the ground
 
-    if (!Entity::isTouchingFloor()) {
+    if (!isTouchingFloor()) {
         if (velocity.y <= maxFallSpeed)
             velocity.y++;
         else
@@ -165,4 +157,11 @@ void Entity::applyGravity() {
 
 void Entity::applyMovement() {
     applyGravity();
+}
+
+Entity::Entity() {
+    velocity.x = 0;
+    velocity.y = 0;
+    origin.x = 0;
+    origin.y = 0;
 }
