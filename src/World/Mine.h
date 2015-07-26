@@ -10,7 +10,10 @@
 class Mine: public Entity {
 private:
     bool detonated = false;
-
+    double placedTimestamp = -1;
+    double triggeredTimestamp = -1;
+    int fuseTime = 1000;
+    int placeTime = 3000;
 public:
     Mine(Game* game);
     bool isTriggered();

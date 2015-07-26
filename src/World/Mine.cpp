@@ -17,8 +17,14 @@ void Mine::detonate() {
 void Mine::onUpdate() {
     applyVelocity();
 
-    if (isTriggered() && !detonated) {
-        detonate();
+    if ((triggeredTimestamp != -1 || isTriggered()) && !detonated) {
+        if (triggeredTimestamp == -1) {
+            triggeredTimestamp = SDL_GetTicks();
+        }
+
+        if (SDL_GetTicks() > triggeredTimestamp + this->fuseTime) {
+            detonate();
+        }
     }
 }
 
@@ -57,9 +63,16 @@ void Mine::render(Camera *camera) {
     rect.h = height;
 
     SDL_Color bg;
-    bg.b = 25;
-    bg.g = 120;
-    bg.r = 25;
+
+    if (triggeredTimestamp == -1) {
+        bg.b = 25;
+        bg.g = 120;
+        bg.r = 25;
+    } else {
+        bg.b = 25;
+        bg.g = 25;
+        bg.r = 120;
+    }
 
     SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, bg.a);
     SDL_RenderFillRect(renderer, &rect);
@@ -69,4 +82,5 @@ Mine::Mine(Game *game) {
     this->game = game;
     width = 12;
     height = 6;
+    this->placedTimestamp = SDL_GetTicks();
 }

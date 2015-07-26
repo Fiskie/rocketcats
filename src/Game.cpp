@@ -31,11 +31,9 @@ void Game::initLibraries() {
         strcat(err, SDL_GetError());
         throw new FatalGameException(err);
     }
-}
 
-void Game::initRenderer() {
     // Create window
-    window = SDL_CreateWindow("rocketcats", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, resX, resY,
+    window = SDL_CreateWindow("Rocket Cats!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, resX, resY,
                               SDL_WINDOW_SHOWN);
 
     if (window == NULL) {
@@ -43,6 +41,9 @@ void Game::initRenderer() {
         strcat(err, SDL_GetError());
         throw new FatalGameException(err);
     }
+}
+
+void Game::initRenderer() {
 
     renderer = SDL_CreateRenderer(window, 0, SDL_RENDERER_ACCELERATED);
 
@@ -109,7 +110,7 @@ void Game::main() {
 
     SDL_Thread* renderThread = SDL_CreateThread(renderLoop, "RenderThread", (void *) this);
 
-    const double UPDATE_RATE = 45;
+    const double UPDATE_RATE = 40;
     const double TICK_TIME = 1000 / UPDATE_RATE;
 
     while (running) {
