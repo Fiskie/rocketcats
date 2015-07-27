@@ -27,7 +27,12 @@ class Camera {
 private:
     int trackingMode = TRACK_STRICT;
     TTF_Font *font;
+    AbsPos frameOrigin;
 public:
+    const AbsPos &getFrameOrigin() const {
+        return frameOrigin;
+    }
+
     Game *game;
 
     Camera(Game *game);

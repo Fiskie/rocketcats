@@ -65,7 +65,7 @@ void Event::onMouseMotion(SDL_MouseMotionEvent motion) {
         return;
     }
 
-    Camera *camera = ((Camera*) game->getCamera());
+    Camera *camera = game->getCamera();
 
     camera->setTrackingMode(TRACK_DISABLE);
 

@@ -11,18 +11,25 @@ void Mine::detonate() {
     Explosion *explosion = new Explosion(map, {(int) origin.x, (int) origin.y}, 40);
     explosion->explode();
     delete explosion;
+
     detonated = true;
 }
 
 void Mine::onUpdate() {
     applyVelocity();
 
+    double currentTime = SDL_GetTicks();
+
+    if (placedTimestamp + this->placeTime > currentTime) {
+        return;
+    }
+
     if ((triggeredTimestamp != -1 || isTriggered()) && !detonated) {
         if (triggeredTimestamp == -1) {
-            triggeredTimestamp = SDL_GetTicks();
+            triggeredTimestamp = currentTime;
         }
 
-        if (SDL_GetTicks() > triggeredTimestamp + this->fuseTime) {
+        if (currentTime > triggeredTimestamp + this->fuseTime) {
             detonate();
         }
     }
@@ -47,12 +54,12 @@ void Mine::render(Camera *camera) {
     if (detonated) // todo entity cleanup
         return;
 
-    AbsPos camOrigin = camera->origin;
+    AbsPos camOrigin = camera->getFrameOrigin();
 
-    int cameraX = camOrigin.x - camera->game->originX;
-    int cameraY = camOrigin.y - camera->game->originY;
+    int cameraX = camOrigin.x - game->originX;
+    int cameraY = camOrigin.y - game->originY;
 
-    SDL_Renderer *renderer = camera->game->renderer;
+    SDL_Renderer *renderer = game->renderer;
 
     int oX = (int) origin.x, oY = (int) origin.y;
 
@@ -78,8 +85,25 @@ void Mine::render(Camera *camera) {
     SDL_RenderFillRect(renderer, &rect);
 }
 
+/**
+ * Constructor for mine placed by map generator
+ */
 Mine::Mine(Game *game) {
     this->game = game;
+    init();
+}
+
+/**
+ * Constructor for mine placed by
+ */
+Mine::Mine(Game *game, Cat *owner) {
+    this->game = game;
+    this->owner = owner;
+    placedTimestamp = SDL_GetTicks();
+    init();
+}
+
+void Mine::init() {
     width = 12;
     height = 6;
     this->placedTimestamp = SDL_GetTicks();

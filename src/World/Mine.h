@@ -16,10 +16,16 @@ private:
     int placeTime = 3000;
 public:
     Mine(Game* game);
+    Mine(Game* game, Cat*owner);
     bool isTriggered();
     void detonate();
     void onUpdate();
     void render(Camera *camera);
+    void init();
+
+    Cat *owner;
+
+    void isPlaceCooldowned();
 };
 
 

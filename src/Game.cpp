@@ -100,11 +100,6 @@ int renderLoop(void *gamePtr) {
 }
 
 void Game::main() {
-    double t = 0.0;
-    const double dt = 0.01;
-
-    double currentTime = SDL_GetTicks();
-    double accumulator = 0.0;
     frames = 0;
     Timer *capTimer = new Timer();
 
@@ -115,35 +110,14 @@ void Game::main() {
 
     while (running) {
         capTimer->start();
-
-        double newTime = SDL_GetTicks();
-        double frameTime = newTime - currentTime;
-
-        if (frameTime > 0.01)
-            frameTime = 0.01;
-
-        currentTime = newTime;
-
-        accumulator += frameTime;
-
         event->handle();
+        update();
 
-        //while (accumulator >= dt) {
-            update();
-        //    t += dt;
-        //    accumulator -= dt;
-        //}
-
-        // If frame finished early
+        // Cap framerate
         int frameTicks = capTimer->getTicks();
 
         if (frameTicks < TICK_TIME)
-        {
-            //Wait remaining time
             SDL_Delay((Uint32) TICK_TIME - frameTicks);
-        }
-
-        // const double alpha = accumulator / dt;
     }
 
     SDL_WaitThread(renderThread, NULL);

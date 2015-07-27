@@ -131,14 +131,12 @@ AbsPos Camera::getOrigin() {
 }
 
 void Camera::renderMap() {
-    AbsPos origin = getOrigin();
+    int cameraX = frameOrigin.x - game->originX;
+    int cameraY = frameOrigin.y - game->originY;
+    int cameraW = frameOrigin.x + game->originX;
+    int cameraH = frameOrigin.y + game->originY;
 
-    int cameraX = origin.x - game->originX;
-    int cameraY = origin.y - game->originY;
-    int cameraW = origin.x + game->originX;
-    int cameraH = origin.y + game->originY;
-
-    renderLabel(format("Camera: origin (%d, %d) at (%d, %d, %d, %d)", origin.x, origin.y, cameraX, cameraY, cameraW, cameraH), 4, 124);
+    renderLabel(format("Camera: origin (%d, %d) at (%d, %d, %d, %d)", frameOrigin.x, frameOrigin.y, cameraX, cameraY, cameraW, cameraH), 4, 124);
 
     Map *map = game->map;
 
@@ -160,6 +158,10 @@ void Camera::renderMap() {
 }
 
 void Camera::render() {
+    // For thread safety, store camera origin variables before we render them.
+    AbsPos origin = getOrigin();
+    frameOrigin = {origin.x, origin.y};
+
     long start = SDL_GetTicks();
 
     this->renderBg();

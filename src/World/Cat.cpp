@@ -133,7 +133,7 @@ void Cat::onUpdate() {
 }
 
 void Cat::render(Camera *camera) {
-    AbsPos camOrigin = camera->getOrigin();
+    AbsPos camOrigin = camera->getFrameOrigin();
 
     int cameraX = camOrigin.x - camera->game->originX;
     int cameraY = camOrigin.y - camera->game->originY;
