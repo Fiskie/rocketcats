@@ -27,6 +27,8 @@ void Explosion::explode() {
         }
     }
 
+    map->requestTextureUpdate();
+
     // project movable entities away from the explosion
     list<Entity*> *entities = map->getEntities();
 

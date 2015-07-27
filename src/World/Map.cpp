@@ -5,7 +5,8 @@
 #include "Map.h"
 #include "Cat.h"
 
-Map::Map(int w, int h) {
+Map::Map(Game *game, int w, int h) {
+    this->game = game;
     this->width = w;
     this->height = h;
     this->cats = new list<Cat*>();
@@ -14,6 +15,34 @@ Map::Map(int w, int h) {
 
 list<Cat*>* Map::getCats() {
     return cats;
+}
+
+void Map::createTexture() {
+    this->foreground = SDL_CreateTexture(game->renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, width, height);
+}
+
+// Todo: this
+void Map::updateTexture() {
+    update = false;
+
+    if (this->foreground == NULL)
+        createTexture();
+
+    SDL_Surface *surface = SDL_CreateRGBSurface(0, width, height, 32, 0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
+
+    printf("%s", SDL_GetError());
+
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            Tile tile = terrain[x][y];
+
+            if (!tile.destroyed)
+                ((Uint32 *) surface->pixels)[y * width + x] = SDL_MapRGBA(surface->format, tile.color.a, tile.color.r, tile.color.g, tile.color.b);
+        }
+    }
+
+    SDL_UpdateTexture(foreground, NULL, surface->pixels, surface->pitch);
+    SDL_FreeSurface(surface);
 }
 
 void Map::addCat(Cat *cat) {
@@ -72,4 +101,8 @@ void Map::setTile(int x, int y, Tile tile) {
 void Map::addEntity(Entity *entity) {
     entities->push_back(entity);
     entity->setMap(this);
+}
+
+void Map::requestTextureUpdate() {
+    update = true;
 }

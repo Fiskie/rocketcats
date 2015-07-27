@@ -44,7 +44,6 @@ void Game::initLibraries() {
 }
 
 void Game::initRenderer() {
-
     renderer = SDL_CreateRenderer(window, 0, SDL_RENDERER_ACCELERATED);
 
     if (renderer == NULL) {
@@ -63,11 +62,11 @@ int renderLoop(void *gamePtr) {
 
     game->initRenderer();
 
-    printf("Running rendering thread..\n");
-
     Timer *capTimer = new Timer();
     Timer *fpsTimer = new Timer();
     fpsTimer->start();
+
+    game->map->updateTexture();
 
     const double RENDER_RATE = 60;
     const double TICK_TIME = 1000 / RENDER_RATE;
@@ -82,16 +81,16 @@ int renderLoop(void *gamePtr) {
             fpsTimer->start();
         }
 
+        if (game->map->update)
+            game->map->updateTexture();
+
         game->render();
 
-        // If frame finished early
+        // Cap framerate
         int frameTicks = capTimer->getTicks();
 
         if (frameTicks < TICK_TIME)
-        {
-            //Wait remaining time
             SDL_Delay((Uint32) TICK_TIME - frameTicks);
-        }
 
         game->frames++;
     }
@@ -189,7 +188,7 @@ void Game::setup() {
     event = new Event(this);
     camera = new Camera(this);
 
-    MapGenerator *generator = new MapGenerator();
+    MapGenerator *generator = new MapGenerator(this);
     map = generator->generate();
 
     Cat *cat = new Cat(this);

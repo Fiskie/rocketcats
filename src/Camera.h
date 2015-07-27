@@ -61,6 +61,8 @@ public:
     void placeOriginAtActiveCat();
 
     virtual ~Camera();
+
+    void renderMapTexture();
 };
 
 #endif //rocketcats_CAMERA_H

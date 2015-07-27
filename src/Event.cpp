@@ -10,6 +10,7 @@
 #include "Event.h"
 #include "World/Cat.h"
 #include "Camera.h"
+#include "FatalGameException.h"
 
 using namespace std;
 
@@ -45,7 +46,7 @@ void Event::onKeyDown(SDL_Keycode key) {
         if ((*bindings)[key] == MOVEMENT_CYCLE) {
             game->cycleActive();
         } else if ((*bindings)[key] == MOVEMENT_CAMERA_RESET) {
-            ((Camera*) game->getCamera())->setTrackingMode(TRACK_LOOSE);
+            game->getCamera()->setTrackingMode(TRACK_LOOSE);
         } else {
             game->getActiveCat()->setMovement((*bindings)[key]);
         }
@@ -72,7 +73,7 @@ void Event::onMouseMotion(SDL_MouseMotionEvent motion) {
     camera->origin.x += motion.xrel;
     camera->origin.y += motion.yrel;
 
-    SDL_WarpMouseInWindow(game->getWindow(), game->originX, game->originY);
+    SDL_WarpMouseInWindow(game->window, game->originX, game->originY);
 
     ignoreMovement = true;
 }

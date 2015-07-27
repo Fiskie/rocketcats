@@ -153,8 +153,52 @@ void Camera::renderMap() {
             }
         }
     }
+}
 
-    SDL_SetRenderTarget(renderer, NULL);
+#define min(a, b) a < b ? a : b
+#define max(a, b) a > b ? a : b
+#define clamp(a, b, c) min(a, max(b, c))
+
+void Camera::renderMapTexture() {
+    int cameraX = frameOrigin.x - game->originX;
+    int cameraY = frameOrigin.y - game->originY;
+    int cameraW = frameOrigin.x + game->originX;
+    int cameraH = frameOrigin.y + game->originY;
+
+
+    Map *map = game->map;
+
+    SDL_Texture *texture = map->foreground;
+    SDL_Renderer *renderer = game->renderer;
+
+    SDL_Rect source;
+    SDL_Rect destination;
+
+    source.x = cameraX;
+    source.y = cameraY;
+    source.w = game->resX;
+    source.h = game->resY;
+
+    destination.x = max(0, -cameraX);
+    destination.y = max(0, -cameraY);
+
+    if (cameraX <= 0) {
+        destination.w = min(game->resX, game->resX + cameraX);
+    } else {
+        destination.w = cameraX > game->resX ? game->resX - (cameraX - game->resX) : game->resX;
+    }
+
+    if (cameraY <= 0) {
+        destination.h = min(game->resY, game->resY + cameraY);
+    } else {
+        destination.h = cameraY > game->resY ? game->resY - (cameraY - game->resY) : game->resY;
+    }
+
+    SDL_RenderCopy(renderer, texture, &source, &destination);
+
+    renderLabel(format("Camera: origin (%d, %d) at (%d, %d, %d, %d)", frameOrigin.x, frameOrigin.y, cameraX, cameraY, cameraW, cameraH), 4, 124);
+    renderLabel(format("Camera: source (%d, %d, %d, %d)", source.x, source.y, source.w, source.h), 4, 144);
+    renderLabel(format("Camera: dest   (%d, %d, %d, %d)", destination.x, destination.y, destination.w, destination.h), 4, 164);
 }
 
 void Camera::render() {
@@ -167,7 +211,7 @@ void Camera::render() {
     this->renderBg();
     long bgRender = SDL_GetTicks();
 
-    this->renderMap();
+    this->renderMapTexture();
     long mapRender = SDL_GetTicks();
 
     list<Entity*> *entities = game->map->getEntities();

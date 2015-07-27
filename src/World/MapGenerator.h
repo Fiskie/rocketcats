@@ -9,8 +9,10 @@
 #include "Map.h"
 
 class MapGenerator {
+    Game *game;
 public:
     Map *generate();
+    MapGenerator(Game *game);
 };
 
 

@@ -14,16 +14,17 @@ using namespace std;
 
 class Cat;
 class Entity;
+class Game;
 
 class Map {
 private:
     list<Entity*> *entities;
     list<Cat*> *cats;
 public:
+    Game *game;
     int width;
     int height;
-    Tile terrain[1600][900];
-    Map(int w, int h);
+    Tile terrain[3200][1600];
     list<Cat*>* getCats();
     void addCat(Cat* cat);
 
@@ -40,6 +41,17 @@ public:
     }
 
     void addEntity(Entity *entity);
+
+    void updateTexture();
+
+    SDL_Texture *foreground;
+    Map(Game *game, int w, int h);
+
+    void createTexture();
+
+    void requestTextureUpdate();
+
+    bool update;
 };
 
 #endif //ROCKETCATS_MAP_H

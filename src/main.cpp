@@ -11,7 +11,7 @@
 int main(int argc, const char *argv[]) {
     Game *game = new Game();
 
-    game->setResolution(800, 450);
+    game->setResolution(1600, 900);
     game->run();
 
     return 0;

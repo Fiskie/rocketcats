@@ -55,9 +55,9 @@ Map *MapGenerator::generate() {
 
     double startTime = SDL_GetTicks();
 
-    int w = 1600, h = 900;
+    int w = 3200, h = 1600;
 
-    Map *map = new Map(w, h);
+    Map *map = new Map(game, w, h);
 
     Tile tile;
 
@@ -81,4 +81,8 @@ Map *MapGenerator::generate() {
     std::cout << "Done. Time taken: " << (endTime - startTime) << "ms\n";
 
     return map;
+}
+
+MapGenerator::MapGenerator(Game *game) {
+    this->game = game;
 }
