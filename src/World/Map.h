@@ -24,7 +24,7 @@ public:
     Game *game;
     int width;
     int height;
-    Tile terrain[3200][1600];
+    Tile terrain[800][400];
     list<Cat*>* getCats();
     void addCat(Cat* cat);
 

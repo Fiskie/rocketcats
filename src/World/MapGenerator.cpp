@@ -55,7 +55,7 @@ Map *MapGenerator::generate() {
 
     double startTime = SDL_GetTicks();
 
-    int w = 3200, h = 1600;
+    int w = 800, h = 400;
 
     Map *map = new Map(game, w, h);
 
@@ -67,7 +67,7 @@ Map *MapGenerator::generate() {
     tile.destroyed = false;
 
     for (int x = 0; x < w; x++) {
-        int ceil = (int) cosineInterpolate(64, 684, (double) x / w);
+        int ceil = (int) cosineInterpolate(64, 284, (double) x / w);
 
         printf("x: %d ceil: %d\n", x, ceil);
 

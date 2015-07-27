@@ -13,6 +13,7 @@ void Mine::detonate() {
     delete explosion;
 
     detonated = true;
+    removable = true;
 }
 
 void Mine::onUpdate() {

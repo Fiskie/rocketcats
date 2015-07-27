@@ -91,8 +91,8 @@ void Camera::renderBg() {
     SDL_Rect rect;
     rect.x = 0;
     rect.y = 0;
-    rect.w = map->width;
-    rect.h = map->height;
+    rect.w = game->resX;
+    rect.h = game->resY;
 
     SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, bg.a);
     SDL_RenderFillRect(renderer, &rect);
@@ -180,9 +180,15 @@ void Camera::renderMapTexture() {
 
     destination.x = max(0, -cameraX);
     destination.y = max(0, -cameraY);
+    destination.w = min(map->width, map->width - cameraX);
+    destination.h = min(map->height, map->height - cameraY);
 
+    if (destination.y + destination.h > game->resY)
+        destination.h;
+
+    /*
     if (cameraX <= 0) {
-        destination.w = min(game->resX, game->resX + cameraX);
+        destination.w = clamp(game->resX, game->resX + cameraX, map->width);
     } else {
         destination.w = cameraX > game->resX ? game->resX - (cameraX - game->resX) : game->resX;
     }
@@ -191,7 +197,7 @@ void Camera::renderMapTexture() {
         destination.h = min(game->resY, game->resY + cameraY);
     } else {
         destination.h = cameraY > game->resY ? game->resY - (cameraY - game->resY) : game->resY;
-    }
+    }*/
 
     SDL_RenderCopy(renderer, texture, &source, &destination);
 

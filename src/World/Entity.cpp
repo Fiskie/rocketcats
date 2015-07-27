@@ -61,6 +61,11 @@ void Entity::applyVelocity() {
         remainingX -= addedX;
         remainingY -= addedY;
     }
+
+    if (!removable && origin.y > map->height + 256) {
+        printf("Object fell out of world, marking as removeable.\n");
+        removable = true;
+    }
 }
 
 bool Entity::moveTo(double x, double y) {

@@ -88,6 +88,8 @@ public:
     void main();
 
     void update();
+
+    int ticks;
 };
 
 //missing string printf

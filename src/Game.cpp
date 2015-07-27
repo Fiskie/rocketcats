@@ -100,6 +100,7 @@ int renderLoop(void *gamePtr) {
 
 void Game::main() {
     frames = 0;
+    ticks = 0;
     Timer *capTimer = new Timer();
 
     SDL_Thread* renderThread = SDL_CreateThread(renderLoop, "RenderThread", (void *) this);
@@ -117,6 +118,8 @@ void Game::main() {
 
         if (frameTicks < TICK_TIME)
             SDL_Delay((Uint32) TICK_TIME - frameTicks);
+
+        ticks++;
     }
 
     SDL_WaitThread(renderThread, NULL);
@@ -177,6 +180,16 @@ void Game::render() {
 
 void Game::update() {
     auto entities = map->getEntities();
+
+    if (ticks % 100 == 0) {
+        for (auto i = entities->begin(); i != entities->end(); i++) {
+            if ((*i)->removable) {
+                printf("Removing object.\n");
+                entities->erase(i);
+                delete *i++; // This makes sure we're no longer referencing the erased element
+            }
+        }
+    }
 
     for (auto i = entities->begin(); i != entities->end(); i++) {
         (*i)->onUpdate();

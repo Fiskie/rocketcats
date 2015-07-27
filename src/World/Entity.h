@@ -50,6 +50,7 @@ public:
     bool isTouchingCeiling();
     bool isValidLocation(double x, double y);
     bool moveTo(double x, double y);
+    bool removable = false;
 
     Map *getMap() const {
         return map;
