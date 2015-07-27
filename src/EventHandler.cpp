@@ -7,16 +7,18 @@
 //
 
 #include <iostream>
-#include "Event.h"
+#include "EventHandler.h"
 #include "World/Cat.h"
 #include "Camera.h"
 #include "FatalGameException.h"
 
 using namespace std;
 
-Event::Event(Game *game) {
+EventHandler::EventHandler(Game *game) {
     this->game = game;
     bindings = new map<SDL_Keycode, int>();
+    accumulatedMotion.x = 0;
+    accumulatedMotion.y = 0;
 
     bind(SDLK_w, MOVEMENT_ADJUSTAIMUP);
     bind(SDLK_s, MOVEMENT_ADJUSTAIMDOWN);
@@ -29,19 +31,19 @@ Event::Event(Game *game) {
     bind(SDLK_h, MOVEMENT_CAMERA_RESET);
 }
 
-void Event::bind(SDL_Keycode key, int action) {
+void EventHandler::bind(SDL_Keycode key, int action) {
     (*bindings)[key] = action;
 }
 
-void Event::unbind(SDL_Keycode key) {
+void EventHandler::unbind(SDL_Keycode key) {
     (*bindings)[key] = NULL;
 }
 
-void Event::unbindAll() {
+void EventHandler::unbindAll() {
     bindings->clear();
 }
 
-void Event::onKeyDown(SDL_Keycode key) {
+void EventHandler::onKeyDown(SDL_Keycode key) {
     if (bindings->find(key) != bindings->end()) {
         if ((*bindings)[key] == MOVEMENT_CYCLE) {
             game->cycleActive();
@@ -53,37 +55,33 @@ void Event::onKeyDown(SDL_Keycode key) {
     }
 }
 
-void Event::onKeyUp(SDL_Keycode key) {
+void EventHandler::onKeyUp(SDL_Keycode key) {
     if (bindings->find(key) != bindings->end()) {
         game->getActiveCat()->unsetMovement((*bindings)[key]);
     }
 }
 
-void Event::onMouseMotion(SDL_MouseMotionEvent motion) {
-    // Warping the mouse back to the middle of the window causes another event to fire; this stops that.
+void EventHandler::onMouseMotion(SDL_MouseMotionEvent motion) {
     if (ignoreMovement) {
         ignoreMovement = false;
         return;
     }
 
-    Camera *camera = game->getCamera();
+    accumulatedMotion.x += motion.xrel;
+    accumulatedMotion.y += motion.yrel;
 
-    camera->setTrackingMode(TRACK_DISABLE);
-
-    camera->origin.x += motion.xrel;
-    camera->origin.y += motion.yrel;
-
-    SDL_WarpMouseInWindow(game->window, game->originX, game->originY);
-
-    ignoreMovement = true;
+    game->getCamera()->setTrackingMode(TRACK_DISABLE);
 }
 
-void Event::onMousePress(SDL_MouseButtonEvent event) {
+void EventHandler::onMousePress(SDL_MouseButtonEvent event) {
 
 }
 
-void Event::handle() {
+void EventHandler::handle() {
     SDL_Event e;
+
+    accumulatedMotion.x = 0;
+    accumulatedMotion.y = 0;
 
     // Handle events on queue
     while (SDL_PollEvent(&e) != 0) {
@@ -106,5 +104,15 @@ void Event::handle() {
             default:
                 break;
         }
+    }
+
+    if (accumulatedMotion.x != 0 || accumulatedMotion.y != 0) {
+        Camera *camera = game->getCamera();
+        camera->origin.x += accumulatedMotion.x;
+        camera->origin.y += accumulatedMotion.y;
+
+        SDL_WarpMouseInWindow(game->window, game->originX, game->originY);
+
+        ignoreMovement = true;
     }
 }

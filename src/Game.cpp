@@ -185,7 +185,7 @@ void Game::update() {
 
 void Game::setup() {
     fpsTimer->start();
-    event = new Event(this);
+    event = new EventHandler(this);
     camera = new Camera(this);
 
     MapGenerator *generator = new MapGenerator(this);

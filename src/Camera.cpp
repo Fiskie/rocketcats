@@ -165,7 +165,6 @@ void Camera::renderMapTexture() {
     int cameraW = frameOrigin.x + game->originX;
     int cameraH = frameOrigin.y + game->originY;
 
-
     Map *map = game->map;
 
     SDL_Texture *texture = map->foreground;

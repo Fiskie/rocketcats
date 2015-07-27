@@ -10,12 +10,12 @@
 #define __rocketcats__game__
 
 #include <SDL2/sdl.h>
-#include "Event.h"
+#include "EventHandler.h"
 #include "Timer.h"
 #include <list>
 #include <string>
 
-class Event;
+class EventHandler;
 
 class Map;
 
@@ -25,7 +25,7 @@ class Cat;
 
 class Game {
 private:
-    Event *event = NULL;
+    EventHandler *event = NULL;
     Timer *fpsTimer = new Timer();
 
 // list<Camera> *cameras; todo

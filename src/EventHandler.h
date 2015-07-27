@@ -12,18 +12,19 @@
 #include <stdio.h>
 #include <map>
 #include "Game.h"
+#include "Pos.h"
 
 using namespace std;
 
 class Game;
 
-class Event {
+class EventHandler {
 private:
     Game *game;
     map<SDL_Keycode, int> *bindings;
-    
+    AbsPos accumulatedMotion;
 public:
-    Event(Game *game);
+    EventHandler(Game *game);
 
     void handle();
 
