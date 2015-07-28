@@ -55,7 +55,7 @@ Map *MapGenerator::generate() {
 
     double startTime = SDL_GetTicks();
 
-    int w = 800, h = 400;
+    int w = 1600, h = 900;
 
     Map *map = new Map(game, w, h);
 

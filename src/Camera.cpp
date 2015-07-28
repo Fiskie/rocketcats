@@ -180,24 +180,15 @@ void Camera::renderMapTexture() {
 
     destination.x = max(0, -cameraX);
     destination.y = max(0, -cameraY);
+
     destination.w = min(map->width, map->width - cameraX);
     destination.h = min(map->height, map->height - cameraY);
 
-    if (destination.y + destination.h > game->resY)
-        destination.h;
+    if (destination.x > game->resX - destination.w)
+        destination.w -= destination.x - (game->resX - destination.w);
 
-    /*
-    if (cameraX <= 0) {
-        destination.w = clamp(game->resX, game->resX + cameraX, map->width);
-    } else {
-        destination.w = cameraX > game->resX ? game->resX - (cameraX - game->resX) : game->resX;
-    }
-
-    if (cameraY <= 0) {
-        destination.h = min(game->resY, game->resY + cameraY);
-    } else {
-        destination.h = cameraY > game->resY ? game->resY - (cameraY - game->resY) : game->resY;
-    }*/
+    if (destination.y > game->resY - destination.h)
+        destination.h -= destination.y - (game->resY - destination.h);
 
     SDL_RenderCopy(renderer, texture, &source, &destination);
 
