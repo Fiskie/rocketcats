@@ -6,7 +6,7 @@
 #define ROCKETCATS_TEAM_H
 
 #include "Cat.h"
-#include <list>
+#include <vector>
 
 using namespace std;
 
@@ -14,10 +14,36 @@ class Cat;
 
 class Team {
 private:
-    list<Cat> *members;
+    vector<char*>* catNames;
+    char* name;
 public:
-    list<Cat> *getMembers();
-    Team();
+    vector<char *> *getCatNames() const {
+        return catNames;
+    }
+
+    void setCatNames(vector<char *> *catNames) {
+        Team::catNames = catNames;
+    }
+
+    char *getName() const {
+        return name;
+    }
+
+    void setName(char *name) {
+        Team::name = name;
+    }
+
+    void setName(const char *name) {
+        Team::name = (char*) name;
+    }
+
+    void setCatName(int i, char* name);
+    char* getCatName(int i);
+    vector<Cat*>* generateCats();
+
+    Team(Game *game);
+
+    Game *game;
 };
 
 

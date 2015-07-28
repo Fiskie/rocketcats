@@ -10,6 +10,9 @@
 #include "Entity.h"
 #include <list>
 
+#define MAP_WIDTH 1600
+#define MAP_HEIGHT 900
+
 using namespace std;
 
 class Cat;
@@ -24,7 +27,7 @@ public:
     Game *game;
     int width;
     int height;
-    Tile terrain[1600][900];
+    Tile terrain[MAP_WIDTH][MAP_HEIGHT];
     list<Cat*>* getCats();
     void addCat(Cat* cat);
 

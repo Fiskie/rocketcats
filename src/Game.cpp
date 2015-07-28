@@ -204,26 +204,24 @@ void Game::setup() {
     MapGenerator *generator = new MapGenerator(this);
     map = generator->generate();
 
-    Cat *cat = new Cat(this);
-    cat->setName("Meow");
+    Team *team = new Team(this);
+    team->setName("Cat Noises");
 
-    activeCat = cat;
+    team->setCatName(0, "Meow");
+    team->setCatName(1, "Mew");
+    team->setCatName(2, "Miauw");
+    team->setCatName(3, "Nyan");
+    team->setCatName(4, "Nya");
 
-    camera->target = cat;
+    vector<Cat*>* cats = team->generateCats();
 
-    Cat *cat2 = new Cat(this);
-    cat2->setName("Rrerr");
+    for (auto i = cats->begin(); i != cats->end(); i++) {
+        map->addCat(*i);
+        activeCat = *i;
+        camera->target = *i;
+    };
 
-    Cat *cat3 = new Cat(this);
-    cat3->setName("Nyan");
 
-    Cat *cat4 = new Cat(this);
-    cat4->setName("Mew");
-
-    map->addCat(cat);
-    map->addCat(cat2);
-    map->addCat(cat3);
-    map->addCat(cat4);
 
     for (int i = 1; i < 10; i++) {
         Mine *mine = new Mine(this);

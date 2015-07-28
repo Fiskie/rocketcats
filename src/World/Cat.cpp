@@ -173,4 +173,5 @@ Cat::Cat(Game *game) {
     velocity.y = 0;
     unsetAllMovement();
     this->game = game;
+    this->name = "Unnamed";
 }
